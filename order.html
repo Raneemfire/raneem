@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Electric car charger</a>
+          <a class="navbar-brand" href="#" id="nameUser">Electric car charger</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -148,7 +148,16 @@ function Start() {
         document.getElementById(k).appendChild(coustTag);
 
 
-
+   var botton_n = document.createElement("a");        
+        var t = document.createTextNode("Remove");       
+        botton_n.appendChild(t);
+        botton_n.setAttribute('class', "waves-effect  waves-light btn red");
+        var fu_onclick = "RemoveID('"+ k + "')";
+        botton_n.setAttribute('onclick' , fu_onclick); 
+        botton_n.setAttribute('style' , "z-index: 0;"); 
+        
+                                       
+        document.getElementById(k).appendChild(botton_n);
 
 
 
@@ -192,15 +201,42 @@ function Start() {
 
 }
 
+var name_user;
+      function Start2() {
+        var ref_v22 = firebase.database().ref("driver/" + User_ID + "/");
+   ref_v22.once('value')
+  .then(function(GetData) {
+
+    var Data = GetData.val();
+      name_user = Data.first_name + " " + Data.last_name ;
+       $('#nameUser').text(name_user)
+
+     });
 
 
 
+        }
+
+
+function RemoveID(key) {
+var UserID = 225422;
+var MyPath = firebase.database().ref('driver/' + User_ID + '/MyOrder/' );
+MyPath.child(key).remove().then(function() {
+    console.log("Remove succeeded.");
+    Materialize.toast("Done", 4000);
+    Start();
+  })
+  .catch(function(error) {
+    console.log("Remove failed: " + error.message)
+  });
+}
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
   
 window.User_ID = user.uid ;
 Start();
+Start2();
     
   } else {
      window.location.assign('sign_in.html');

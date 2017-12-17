@@ -78,7 +78,7 @@ var password = $('#password').val();
 
 
 firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-  window.location.assign('index.html');
+  window.location.assign('welcome.html');
 }, function(error) {
   console.log(' An error happened.' , error);
  alert (error);

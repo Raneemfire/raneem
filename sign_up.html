@@ -91,12 +91,13 @@ function dataSet(first_name ,last_name , phone ) {
   var uid = user.uid;
   var d = new Date();
 var textDate = d.toDateString();
- var data = { first_name: first_name , last_name: last_name , phone:phone  };
+
+ var data = { first_name: first_name , last_name: last_name , phone:phone ,lat:32.5391395, lng:35.8565256    };
 
 var MyPath = firebase.database().ref("driver/" + uid + "/");
 MyPath.set(data).then(function() {
     console.log(data);
-   window.location.assign('index.html');
+   window.location.assign('welcome.html');
   })
   .catch(function(error) {
     console.log("failed: " + error.message);

@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Electric car charger</a>
+          <a class="navbar-brand" href="#" id="nameUser">Electric car charger</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -176,6 +176,8 @@ var textDate = d.toDateString();
 var MyPath = firebase.database().ref("renter/" + uid + "/");
 MyPath.update(data).then(function() {
     console.log(data);
+     $('#nameUser').text(first_name + ' ' + last_name)
+ 
    Materialize.toast('succeeded!', 4000)
   })
   .catch(function(error) {
@@ -302,6 +304,35 @@ function addMarker(location) {
 }  
 
 
+
+var User_ID;
+var name_user;
+      function Start() {
+        var ref_v22 = firebase.database().ref("renter/" + User_ID + "/");
+   ref_v22.once('value')
+  .then(function(GetData) {
+
+    var Data = GetData.val();
+      name_user = Data.first_name + " " + Data.last_name ;
+       $('#nameUser').text(name_user)
+
+     });
+
+
+
+        }
+
+
+        firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+  
+window.User_ID = user.uid ;
+Start();
+    
+  } else {
+     window.location.assign('sign_in.html');
+  }
+});
 
 
 </script>
